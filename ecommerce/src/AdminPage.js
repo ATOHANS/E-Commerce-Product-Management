@@ -16,7 +16,7 @@ function AdminPage() {
       
       <button 
         className="btn btn-sm btn-warning mb-3 px-3 py-1" 
-        style={{ color: '#000', backgroundColor: '#ffa31a', border: 'none', borderRadius: '5px' }}
+        style={{ color: '#000', backgroundColor: '#0000FF', border: 'none', borderRadius: '5px' }}
         onClick={handleLogout} // Attach the onClick handler for logout
       >
         Logout
@@ -24,7 +24,7 @@ function AdminPage() {
 
       {/* Header */}
       <h2 className="text-center mb-4">
-        <header className="fw-bold" style={{ color: '#ffa31a' }}>E-COMMERCE MANAGEMENT SYSTEM</header>
+        <header className="fw-bold" style={{ color: '##0000FF' }}>E-COMMERCE MANAGEMENT SYSTEM</header>
       </h2>
 
       {/* Add Item Form */}
@@ -58,7 +58,7 @@ function AdminPage() {
           <div className="col-12 text-center mt-3">
 
             {/* add item button */}
-            <button type="submit" className="btn" style={{ backgroundColor: '#ffa31a', color: '#000' }}>Add Item</button>
+            <button type="submit" className="btn" style={{ backgroundColor: '#0000FF', color: '#000' }}>Add Item</button>
           </div>
         </div>
       </form>
@@ -73,7 +73,7 @@ function AdminPage() {
             className="form-control me-2"
             style={{ width: '300px' }}
           />
-          <button className="btn" style={{ backgroundColor: '#ffa31a', color: '#000' }}>Search</button>
+          <button className="btn" style={{ backgroundColor: '#0000FF', color: '#000' }}>Search</button>
         </div>
 
         {/* Scrollable Table */}
