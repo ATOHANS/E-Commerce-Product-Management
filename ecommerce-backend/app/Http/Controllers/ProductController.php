@@ -10,23 +10,7 @@ class ProductController extends Controller
     // View all products (with search and filter functionality)
     public function index(Request $request)
     {
-        // Basic search and filter functionality
-        $search = $request->input('search');
-        $category = $request->input('category');
-        
-        $query = Product::query();
-        
-        if ($search) {
-            $query->where('description', 'like', '%' . $search . '%')
-                  ->orWhere('barcode', 'like', '%' . $search . '%');
-        }
-
-        if ($category) {
-            $query->where('category', $category);
-        }
-
-        $products = $query->get();
-        
+        $products = Product::all();  // Fetch all products from the 'products' table
         return response()->json($products);
     }
 
