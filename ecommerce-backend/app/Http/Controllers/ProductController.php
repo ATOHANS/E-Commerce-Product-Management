@@ -10,8 +10,23 @@ class ProductController extends Controller
     // View all products (with search and filter functionality)
     public function index(Request $request)
     {
-        $products = Product::all();  // Fetch all products from the 'products' table
+        $query = Product::query();
+
+        if ($request->has('search')) {
+            $query->where('description', 'like', '%' . $request->search . '%');
+        }
+
+        $products = $query->get();
+
         return response()->json($products);
+    }
+
+    // Get a specific product by ID
+    public function show($id)
+    {
+        $product = Product::findOrFail($id); // This will throw a 404 if not found
+
+        return response()->json($product);
     }
 
     // Add a new product
@@ -33,15 +48,16 @@ class ProductController extends Controller
     // Edit an existing product
     public function update(Request $request, $id)
     {
+        $product = Product::findOrFail($id);
+
         $validated = $request->validate([
-            'description' => 'string',
-            'price' => 'numeric',
-            'quantity' => 'integer',
-            'category' => 'string',
+            'description' => 'nullable|string',
+            'price' => 'nullable|numeric',
+            'quantity' => 'nullable|integer',
+            'category' => 'nullable|string',
         ]);
 
-        $product = Product::findOrFail($id);
-        $product->update($validated);
+        $product->update(array_filter($validated));
 
         return response()->json(['message' => 'Product updated successfully', 'product' => $product]);
     }
