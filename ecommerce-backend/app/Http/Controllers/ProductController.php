@@ -24,7 +24,7 @@ class ProductController extends Controller
     // Get a specific product by ID
     public function show($id)
     {
-        $product = Product::findOrFail($id); // This will throw a 404 if not found
+        $product = Product::findOrFail($id);
 
         return response()->json($product);
     }
