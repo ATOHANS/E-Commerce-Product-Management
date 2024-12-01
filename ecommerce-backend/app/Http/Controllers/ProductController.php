@@ -56,4 +56,39 @@ class ProductController extends Controller
         Product::destroy($id);
         return response()->json(null, 204);
     }
+
+    public function addToCart(Request $request)
+    {
+        $validatedData = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1',
+        ]);
+    
+        
+        $product = Product::find($validatedData['product_id']);
+    
+        if (!$product) {
+            return response()->json(['error' => 'Product does not exist'], 404);
+        }
+    
+      
+        $cart = session()->get('cart', []);
+    
+        if (isset($cart[$product->id])) {
+          
+            $cart[$product->id]['quantity'] += $validatedData['quantity'];
+        } else {
+           
+            $cart[$product->id] = [
+                'id' => $product->id,
+                'name' => $product->name,
+                'quantity' => $validatedData['quantity'],
+                'price' => $product->price,
+            ];
+        }
+        session()->put('cart', $cart);
+    
+        return response()->json(['message' => 'Product added to cart', 'cart' => $cart]);
+    }
+    
 }
