@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.js';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap is imported
-import './App.css'; // Import your custom CSS
+import App from './App';
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+import './App.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
