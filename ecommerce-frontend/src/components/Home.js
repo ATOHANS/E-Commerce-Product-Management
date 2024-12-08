@@ -1,5 +1,3 @@
-// Home.js
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProductCatalog from './ProductCatalog';
@@ -35,7 +33,7 @@ const Home = () => {
   return (
     <div>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h1>Welcome to the Group 1 Ecommerce Store</h1>
+        <h1>Welcome to the Store</h1>
         <button
           onClick={handleLogout}
           style={{ padding: '10px 20px', backgroundColor: 'orange', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}

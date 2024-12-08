@@ -123,3 +123,27 @@ li {
 h3, p {
   color: #FFA500; /* Orange text for cart items */
 }
+
+/* Search bar and category filter container */
+.filters-container {
+  align-items: center;
+  gap: 10px;
+}
+
+/* Compact search bar */
+.search-bar {
+  max-width: 200px;
+  font-size: 0.9rem;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #FFA500; /* Matches theme */
+}
+
+/* Compact category filter */
+.category-filter {
+  max-width: 150px;
+  font-size: 0.9rem;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #FFA500; /* Matches theme */
+}

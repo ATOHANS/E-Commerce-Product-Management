@@ -10,8 +10,8 @@ import ProductForm from './components/ProductForm';
 import ProductView from './components/ProductView';
 import Home from './components/Home';
 import AdminDashboard from './components/AdminDashboard';
-import ProtectedRoute from './components/ProtectedRoute';
-import CartPage from './components/CartPage'; // Import the CartPage component
+import PrivateRoute from './components/PrivateRoute';
+import CartPage from './components/CartPage'; 
 
 const App = () => {
     return (
@@ -23,46 +23,47 @@ const App = () => {
                     <Route path="/register" element={<Register />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/products/view/:id" element={<ProductView />} />
-                    <Route path="/cart" element={<CartPage />} /> {/* Cart page route */}
-                    {/* Protected admin routes */}
+                    <Route path="/cart" element={<CartPage />} /> 
+
+                    {/* Private admin routes */}
                     <Route
                         path="/admin"
                         element={
-                            <ProtectedRoute allowedRoles={['admin']}>
+                            <PrivateRoute allowedRoles={['admin']}>
                                 <AdminDashboard />
-                            </ProtectedRoute>
+                            </PrivateRoute>
                         }
                     />
                     <Route
                         path="/products"
                         element={
-                            <ProtectedRoute allowedRoles={['admin']}>
+                            <PrivateRoute allowedRoles={['admin']}>
                                 <ProductList />
-                            </ProtectedRoute>
+                            </PrivateRoute>
                         }
                     />
                     <Route
                         path="/products/new"
                         element={
-                            <ProtectedRoute allowedRoles={['admin']}>
+                            <PrivateRoute allowedRoles={['admin']}>
                                 <ProductForm />
-                            </ProtectedRoute>
+                            </PrivateRoute>
                         }
                     />
                     <Route
                         path="/products/edit/:id"
                         element={
-                            <ProtectedRoute allowedRoles={['admin']}>
+                            <PrivateRoute allowedRoles={['admin']}>
                                 <ProductForm />
-                            </ProtectedRoute>
+                            </PrivateRoute>
                         }
                     />
                     <Route
                         path="/products/view/:id"
                         element={
-                            <ProtectedRoute allowedRoles={['admin']}>
+                            <PrivateRoute allowedRoles={['admin']}>
                                 <ProductView />
-                            </ProtectedRoute>
+                            </PrivateRoute>
                         }
                     />
                 </Routes>
