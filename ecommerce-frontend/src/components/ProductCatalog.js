@@ -7,6 +7,8 @@ const ProductCatalog = ({ addToCart }) => {
     const [products, setProducts] = useState([]);
     const [search, setSearch] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [minPrice, setMinPrice] = useState('');
+    const [maxPrice, setMaxPrice] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,12 +19,15 @@ const ProductCatalog = ({ addToCart }) => {
         fetchProducts();
     }, []);
 
+    // Filter products based on search, category, and price range
     const filteredProducts = products.filter((product) => {
-        const matchesSearch = product.name.toLowerCase().includes(search.toLowerCase()); // Allows small letter when searching
-        const matchesCategory = selectedCategory // Categories 
-            ? product.category === selectedCategory
-            : true;
-        return matchesSearch && matchesCategory;
+        const matchesSearch = product.name.toLowerCase().includes(search.toLowerCase());
+        const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
+        const price = parseFloat(product.price) || 0; // Ensure price is a valid number
+        const matchesMinPrice = minPrice ? price >= parseFloat(minPrice) : true;
+        const matchesMaxPrice = maxPrice ? price <= parseFloat(maxPrice) : true;
+
+        return matchesSearch && matchesCategory && matchesMinPrice && matchesMaxPrice;
     });
 
     const handleViewProduct = (id) => {
@@ -51,6 +56,25 @@ const ProductCatalog = ({ addToCart }) => {
                     <option value="Toys">Toys</option>
                 </Form.Select>
             </div>
+
+           {/* Price Range Filter */}
+    <div className="price-range-container mb-3">
+        <Form.Control
+            type="number"
+            placeholder="Min Price"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+            className="me-2"
+     />
+        <Form.Control
+            type="number"
+            placeholder="Max Price"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+            className="me-2"
+     />
+</div>
+
             <Row>
                 {filteredProducts.length > 0 ? (
                     filteredProducts.map((product) => (
@@ -60,12 +84,18 @@ const ProductCatalog = ({ addToCart }) => {
                                     <Card.Title>{product.name}</Card.Title>
                                     <Card.Text>
                                         Price: ₱{product.price} <br />
-                                        {/* Category: {product.category} <br /> */}
+                                        Availability:{" "}
+                                        {product.quantity > 0 ? (
+                                            <span className="text-success">In Stock</span>
+                                        ) : (
+                                            <span className="text-danger">Out of Stock</span>
+                                        )} <br />
                                     </Card.Text>
                                     <Button
                                         variant="primary"
                                         className="me-2"
                                         onClick={() => addToCart(product)}
+                                        disabled={product.quantity === 0}
                                     >
                                         Add to Cart
                                     </Button>
@@ -80,7 +110,7 @@ const ProductCatalog = ({ addToCart }) => {
                         </Col>
                     ))
                 ) : (
-                    <p>No products match your search or category filter.</p>
+                    <p>No products match your search, category, or price range.</p>
                 )}
             </Row>
         </Container>

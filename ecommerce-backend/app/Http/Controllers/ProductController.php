@@ -90,5 +90,31 @@ class ProductController extends Controller
     
         return response()->json(['message' => 'Product added to cart', 'cart' => $cart]);
     }
+
+    public function processOrder(Request $request)
+    {
+        $validatedData = $request->validate([
+            'shipping_details' => 'required|string',
+            'payment_method' => 'required|string',
+            'cart' => 'required|array',  
+            'cart.*.product_id' => 'required|exists:products,id', 
+            'cart.*.quantity' => 'required|integer|min:1',  
+        ]);
+
+        $cart = $validatedData['cart'];
+
+        foreach ($cart as $item) {
+            $product = Product::find($item['product_id']);
+
+            if ($product->quantity < $item['quantity']) {
+                return response()->json(['error' => "Not enough stock for {$product->name}"], 400);
+            }
+
+            $product->quantity -= $item['quantity'];
+            $product->save();  
+        }
+
+        return response()->json(['message' => 'Order processed successfully.']);
+    }
     
 }

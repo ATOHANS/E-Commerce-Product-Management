@@ -147,3 +147,21 @@ h3, p {
   border-radius: 5px;
   border: 1px solid #FFA500; /* Matches theme */
 }
+
+/* Price Range Container Styling */
+.price-range-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Adjust the gap between inputs */
+  max-width: 400px; /* Set a max-width to control the overall width */
+  margin-bottom: 20px; /* Adjust margin for spacing */
+}
+
+/* Price Range Input Styling */
+.price-range-container .form-control {
+  max-width: 180px; /* Limit width for each input */
+  font-size: 0.9rem; /* Slightly smaller text size */
+  padding: 5px; /* Smaller padding */
+  border-radius: 5px;
+  border: 1px solid #FFA500; /* Orange border */
+}

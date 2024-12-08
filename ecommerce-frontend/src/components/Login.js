@@ -29,7 +29,7 @@ const Login = () => {
                 } else {
                     navigate('/home');
                 }
-            }
+            } 
         } catch (err) {
             setError('Invalid credentials. Please try again.');
         }

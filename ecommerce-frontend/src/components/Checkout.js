@@ -16,16 +16,45 @@ const Checkout = ({ show, onHide, cart, total, setCart, setError }) => {
     }
   }, [cart, show, onHide, navigate]);
 
-  const handleConfirmOrder = () => {
+  const handleConfirmOrder = async () => {
     if (!shippingDetails) {
       setError('Please provide shipping details.');
       return;
     }
 
-    alert('Thank you for your order! Your purchase has been confirmed.');
-    setCart([]); // Clear the cart after successful checkout
-    onHide(); 
-    navigate('/home'); 
+    // Prepare the order data
+    const orderData = {
+      shipping_details: shippingDetails,
+      payment_method: paymentMethod,
+      cart: cart.map((item) => ({
+        product_id: item.id,
+        quantity: item.quantity,
+      })),
+    };
+
+    try {
+      // Make an API request to process the order
+      const response = await fetch('http://127.0.0.1:8000/api/processOrder', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Thank you for your order! Your purchase has been confirmed.');
+        setCart([]); // Clear the cart after successful checkout
+        onHide();
+        navigate('/home');
+      } else {
+        setError(data.error || 'An error occurred. Please try again.');
+      }
+    } catch (error) {
+      setError('An error occurred. Please try again.');
+    }
   };
 
   return (
